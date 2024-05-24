@@ -1,0 +1,372 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tabibk-Dashboard</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <!---->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <meta name="description" content="Responsive HTML Admin Dashboard Template based on Bootstrap 5">
+	<meta name="author" content="NobleUI">
+	<meta name="keywords" content="nobleui, bootstrap, bootstrap 5, bootstrap5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
+
+	<title> Tabibk-Dashboard</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <!-- End fonts -->
+  <!-- Plugin css for this page -->
+  <link rel="stylesheet" href="/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.css">
+	<!-- End plugin css for this page -->
+	<!-- core:css -->
+	<link rel="stylesheet" href="~/assets/vendors/core/core.css">
+	<!-- endinject -->
+
+	<!-- Plugin css for this page -->
+	<link rel="stylesheet" href="~/assets/vendors/flatpickr/flatpickr.min.css">
+	<!-- End plugin css for this page -->
+
+	<!-- inject:css -->
+	<link rel="stylesheet" href="~/assets/fonts/feather-font/css/iconfont.css">
+	<link rel="stylesheet" href="~/assets/vendors/flag-icon-css/css/flag-icon.min.css">
+	<!-- endinject -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Layout styles -->  
+	<link rel="stylesheet" href="~/assets/css/demo2/style.css">
+  <!-- End layout styles -->
+
+  <link rel="shortcut icon" href="~/images/hospital-doctor-detector-virus-medical-mask-care-svgrepo-com.png" />
+</head>
+<body>
+<div>
+	<div class="main-wrapper">
+            @if (User.IsInRole("Admin") || User.IsInRole("Doctor") || User.IsInRole("pharmacy")||User.IsInRole("Lab"))
+                        {
+		<!-- partial:partials/_sidebar.html -->
+		<nav class="sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="sidebar-brand">
+                            Dashboard<span>Tabibk</span>
+        </a>
+        <div class="sidebar-toggler not-active">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <ul class="nav">
+          <li class="nav-item nav-category">Main</li>
+          <li class="nav-item">
+            <a asp-action="Index" asp-controller="Home" class="nav-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house-heart-fill" viewBox="0 0 16 16">
+                                        <path d="M7.293 1.5a1 1 0 0 1 1.414 0L11 3.793V2.5a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v3.293l2.354 2.353a.5.5 0 0 1-.708.707L8 2.207 1.354 8.853a.5.5 0 1 1-.708-.707z" />
+                                        <path d="m14 9.293-6-6-6 6V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5zm-6-.811c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.691 0-5.018" />
+                                    </svg>
+              <span class="link-title">Home</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                        <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                    </svg>
+              <span class="link-title">Profile me</span>
+            </a>
+          </li>
+                            
+          <li class="nav-item nav-category">user&role</li>
+          <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="collapse" href="#emails" role="button" aria-expanded="false" aria-controls="emails">
+              <i class="link-icon" data-feather="activity"></i>
+              <span class="link-title">Manage</span>
+              <i class="link-arrow" data-feather="chevron-down"></i>
+            </a>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <div class="collapse" id="emails">
+                                        <ul class="nav sub-menu">
+                                            <li class="nav-item">
+                                                <a asp-area="" asp-controller="Users" asp-action="Index" class="nav-link">
+                                                    <i class="link-icon" data-feather="users"></i>
+                                                    <span class="link-title">Manege User</span>
+                                                </a>
+                                            </li>
+                                            <li class="nav-item">
+                                                <a asp-area="" asp-controller="Roles" asp-action="Index" class="nav-link">
+                                                    <i class="link-icon" data-feather="anchor"></i>
+                                                    <span class="link-title">Manege Role</span>
+                                                </a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                }
+                               
+          </li>
+
+
+
+                            @if (User.IsInRole("pharmacy") || User.IsInRole("Admin") || User.IsInRole("Doctor")||User.IsInRole("Lab"))
+                            {
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Departments" asp-action="Index" class="nav-link">
+                                            <i class="link-icon" data-feather="columns"></i>
+                                            <span class="link-title">Departments</span>
+                                        </a>
+                                    </li>
+                                     <li class="nav-item">
+                                        <a asp-area="" asp-controller="Doctors" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-pulse" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857q.09.083.176.171a3 3 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01zM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5" />
+                                                <path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162z" />
+                                            </svg>
+                                            <span class="link-title">Doctors</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Pharmacies" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capsule" viewBox="0 0 16 16">
+                                                <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429z" />
+                                            </svg>
+                                            <span class="link-title">pharmacies</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Labs" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-prescription" viewBox="0 0 16 16">
+                                                <path d="M5.5 6a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0V9h.293l2 2-1.147 1.146a.5.5 0 0 0 .708.708L9 11.707l1.146 1.147a.5.5 0 0 0 .708-.708L9.707 11l1.147-1.146a.5.5 0 0 0-.708-.708L9 10.293 7.695 8.987A1.5 1.5 0 0 0 7.5 6zM6 7h1.5a.5.5 0 0 1 0 1H6z" />
+                                                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v10.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 14.5V4a1 1 0 0 1-1-1zm2 3v10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V4zM3 3h10V1H3z" />
+                                            </svg>   <span class="link-title">Labs</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Appointments" asp-action="Index" class="nav-link">
+                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-pulse" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5zm-2 0h1v1H3a1 1 0 0 0-1 1V14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5a1 1 0 0 0-1-1h-1v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2m6.979 3.856a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.895-.133L4.232 10H3.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 .416-.223l1.41-2.115 1.195 3.982a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h1.5a.5.5 0 0 0 0-1h-1.128z"/>
+</svg>   <span class="link-title">Appointments</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Patients" asp-action="Index" class="nav-link">
+                                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"/>
+</svg>  <span class="link-title">Patients</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="MedicationCategories" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capsule-pill" viewBox="0 0 16 16">
+                                                <path d="M11.02 5.364a3 3 0 0 0-4.242-4.243L1.121 6.778a3 3 0 1 0 4.243 4.243l5.657-5.657Zm-6.413-.657 2.878-2.879a2 2 0 1 1 2.829 2.829L7.435 7.536zM12 8a4 4 0 1 1 0 8 4 4 0 0 1 0-8m-.5 1.042a3 3 0 0 0 0 5.917zm1 5.917a3 3 0 0 0 0-5.917z" />
+                                            </svg>
+                                            <span class="link-title">Medication Categories</span>
+                                        </a>
+                                    </li>
+                                }
+                                
+                               
+                                @if (User.IsInRole("Doctor"))
+                                {
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Doctors" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart-pulse" viewBox="0 0 16 16">
+                                                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053.918 3.995.78 5.323 1.508 7H.43c-2.128-5.697 4.165-8.83 7.394-5.857q.09.083.176.171a3 3 0 0 1 .176-.17c3.23-2.974 9.522.159 7.394 5.856h-1.078c.728-1.677.59-3.005.108-3.947C13.486.878 10.4.28 8.717 2.01zM2.212 10h1.315C4.593 11.183 6.05 12.458 8 13.795c1.949-1.337 3.407-2.612 4.473-3.795h1.315c-1.265 1.566-3.14 3.25-5.788 5-2.648-1.75-4.523-3.434-5.788-5" />
+                                                <path d="M10.464 3.314a.5.5 0 0 0-.945.049L7.921 8.956 6.464 5.314a.5.5 0 0 0-.88-.091L3.732 8H.5a.5.5 0 0 0 0 1H4a.5.5 0 0 0 .416-.223l1.473-2.209 1.647 4.118a.5.5 0 0 0 .945-.049l1.598-5.593 1.457 3.642A.5.5 0 0 0 12 9h3.5a.5.5 0 0 0 0-1h-3.162z" />
+                                            </svg>
+                                            <span class="link-title">Doctors</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Patients" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z" />
+                                            </svg>  <span class="link-title">Patients</span>
+                                        </a>
+                                    </li>
+                              
+
+                                }
+
+                                @if (User.IsInRole("pharmacy"))
+                                {
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Pharmacies" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-capsule" viewBox="0 0 16 16">
+                                                <path d="M1.828 8.9 8.9 1.827a4 4 0 1 1 5.657 5.657l-7.07 7.071A4 4 0 1 1 1.827 8.9Zm9.128.771 2.893-2.893a3 3 0 1 0-4.243-4.242L6.713 5.429z" />
+                                            </svg>
+                                            <span class="link-title">My pharmacy</span>
+                                        </a>
+                                    </li>
+                                     <li class="nav-item">
+                                        <a asp-area="" asp-controller="Patients" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z" />
+                                            </svg>  <span class="link-title">Patients</span>
+                                        </a>
+                                    </li>
+                                }
+                                @if (User.IsInRole("Lab"))
+                                {
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Labs" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-prescription" viewBox="0 0 16 16">
+                                                <path d="M5.5 6a.5.5 0 0 0-.5.5v4a.5.5 0 0 0 1 0V9h.293l2 2-1.147 1.146a.5.5 0 0 0 .708.708L9 11.707l1.146 1.147a.5.5 0 0 0 .708-.708L9.707 11l1.147-1.146a.5.5 0 0 0-.708-.708L9 10.293 7.695 8.987A1.5 1.5 0 0 0 7.5 6zM6 7h1.5a.5.5 0 0 1 0 1H6z" />
+                                                <path d="M2 1a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v10.5a1.5 1.5 0 0 1-1.5 1.5h-7A1.5 1.5 0 0 1 3 14.5V4a1 1 0 0 1-1-1zm2 3v10.5a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V4zM3 3h10V1H3z" />
+                                            </svg>    <span class="link-title">My lab</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a asp-area="" asp-controller="Patients" asp-action="Index" class="nav-link">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z" />
+                                            </svg>   <span class="link-title">Patients</span>
+                                        </a>
+                                    </li>
+                                }
+                            }
+
+                          
+                           
+                           
+
+
+                            
+      
+        </ul>
+      </div>
+    </nav>
+        }
+          else if (User.IsInRole("User"))
+                        {
+		<!-- partial:partials/_sidebar.html -->
+		<nav class="sidebar">
+      <div class="sidebar-header">
+        <a href="#" class="sidebar-brand">
+          mahjop<span>dev</span>
+        </a>
+        <div class="sidebar-toggler not-active">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+      </div>
+      <div class="sidebar-body">
+        <ul class="nav">
+          <li class="nav-item nav-category">Main</li>
+          <li class="nav-item">
+            <a asp-action="Index" asp-controller="Home" class="nav-link">
+              <i class="link-icon" data-feather="box"></i>
+              <span class="link-title">Home</span>
+            </a>
+          </li>
+           <li class="nav-item">
+            <a asp-area="Identity" asp-page="/Account/Manage/Index" class="nav-link">
+              <i class="link-icon" data-feather="box"></i>
+              <span class="link-title">Profile me</span>
+            </a>
+          </li>
+                            <li class="nav-item">
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Appointments" asp-action="Index" class="nav-link">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard-pulse" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5zm-2 0h1v1H3a1 1 0 0 0-1 1V14a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V3.5a1 1 0 0 0-1-1h-1v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2m6.979 3.856a.5.5 0 0 0-.968.04L7.92 10.49l-.94-3.135a.5.5 0 0 0-.895-.133L4.232 10H3.5a.5.5 0 0 0 0 1h1a.5.5 0 0 0 .416-.223l1.41-2.115 1.195 3.982a.5.5 0 0 0 .968-.04L9.58 7.51l.94 3.135A.5.5 0 0 0 11 11h1.5a.5.5 0 0 0 0-1h-1.128z" />
+                                    </svg>   <span class="link-title">My Appointments</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a asp-area="" asp-controller="Patients" asp-action="Index" class="nav-link">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-hearts" viewBox="0 0 16 16">
+  <path fill-rule="evenodd" d="M11.5 1.246c.832-.855 2.913.642 0 2.566-2.913-1.924-.832-3.421 0-2.566M9 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0m-9 8c0 1 1 1 1 1h10s1 0 1-1-1-4-6-4-6 3-6 4m13.5-8.09c1.387-1.425 4.855 1.07 0 4.277-4.854-3.207-1.387-5.702 0-4.276ZM15 2.165c.555-.57 1.942.428 0 1.711-1.942-1.283-.555-2.281 0-1.71Z"/>
+                                    </svg>    <span class="link-title">medical profile</span>
+                                </a>
+                            </li>
+
+
+
+
+                        </ul>
+      </div>
+    </nav>
+        }
+ 
+		<!-- partial -->
+	
+		<div class="page-wrapper">
+					
+			<!-- partial:partials/_navbar.html -->
+			<nav class="navbar">
+				<a href="#" class="sidebar-toggler">
+					<i data-feather="menu"></i>
+				</a>
+				<div class="navbar-content">
+					
+					<ul class="navbar-nav">
+						
+				
+                          <partial name="_LoginPartial" />
+					
+						
+					</ul>
+				</div>
+			</nav>
+			<!-- partial -->
+
+			<div class="page-content">
+                 <div class="container">
+              <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+        </div>
+
+
+
+			</div>
+
+		
+		
+		</div>
+	</div>
+         
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+	<!-- core:js -->
+	<script src="~/assets/vendors/core/core.js"></script>
+	<!-- endinject -->
+
+	<!-- Plugin js for this page -->
+  <script src="~/assets/vendors/flatpickr/flatpickr.min.js"></script>
+  <script src="../assets/vendors/apexcharts/apexcharts.min.js"></script>
+	<!-- End plugin js for this page -->
+
+	<!-- inject:js -->
+	<script src="~/assets/vendors/feather-icons/feather.min.js"></script>
+	<script src="~/assets/js/template.js"></script>
+	<!-- endinject -->
+
+	<!-- Custom js for this page -->
+  <script src="~/assets/js/dashboard-dark.js"></script>
+	<!-- End custom js for this page -->
+    
+	<!-- Plugin js for this page -->
+  <script src="~/assets/vendors/datatables.net/jquery.dataTables.js"></script>
+  <script src="~/assets/vendors/datatables.net-bs5/dataTables.bootstrap5.js"></script>
+	<!-- End plugin js for this page -->
+    <!-- Custom js for this page -->
+  <script src="~/assets/js/data-table.js"></script>
+	<!-- End custom js for this page -->
+
+</body>
+</html>

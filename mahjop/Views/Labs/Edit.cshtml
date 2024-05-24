@@ -1,0 +1,78 @@
+﻿@model mahjop.Models.Lab
+
+@{
+    ViewData["Title"] = "Edit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit</h1>
+
+<h4>Lab</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="LabId" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <select asp-for="Address" class="form-control">
+                <option value="">Choose Governorate</option>
+                <option value="Amman">Amman</option>
+                <option value="Irbid">Irbid</option>
+                <option value="Zarqa">Zarqa</option>
+                <option value="Aqaba">Aqaba</option>
+                <option value="Balqa">Balqa</option>
+                <option value="Jarash">Jarash</option>
+                <option value="Karak">Karak</option>
+                <option value="Mafraq">Mafraq</option>
+                <option value="Madaba">Madaba</option>
+                <option value="Ma'an">Ma'an</option>
+                <option value="Tafilah">Tafilah</option>
+                <option value="Ajloun">Ajloun</option>
+            </select>
+            <div class="form-group">
+                <label asp-for="LabPicture" class="control-label"></label>
+                <input asp-for="LabPicture" type="file" class="form-control" />
+                <span asp-validation-for="LabPicture" class="text-danger"></span>
+            </div>
+            @if (User.IsInRole("Admin"))
+            {
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Rating" class="control-label"></label>
+                    <!-- تحديد القيمة الصغرى والقيمة الكبرى للرينج -->
+                    <input asp-for="Rating" type="range" class="form-control" min="0" max="10" oninput="updateRatingValue(this.value)" />
+                    <span id="rating-value" class="text-primary"></span>
+                    <span asp-validation-for="Rating" class="text-danger"></span>
+                </div>
+
+            }
+            <div class="form-group">
+                <label asp-for="UserId" class="control-label"></label>
+                <input readonly asp-for="UserId" class="form-control" />
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

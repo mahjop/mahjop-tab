@@ -1,0 +1,62 @@
+﻿@model PermissionFormViewModel
+@{
+    ViewData["Title"] = "Manage Permissions";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Manage Permission</h1>
+
+
+
+<form method="post" asp-action="ManagePermissions">
+    <div class="card mt-4 mb-5">
+        <div class="card-header">
+            <h2>@Model.RoleName</h2>
+            Add/Remove Permissions
+            <div class="card-body">
+                <input type="hidden" asp-for="RoleId" />
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                <th></th>
+                            <th>Moduls</th>
+                            <th>Permissions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                         @for(int i=0; i < Model.RoleClaims.Count; i++)
+                {
+                    <tr>
+                        <td>
+                            <div class="form-check m-1">
+                        <input type="hidden" asp-for="@Model.RoleClaims[i].RoleName" />
+                        <input asp-for="@Model.RoleClaims[i].IsSelected" class="form-check-input" />
+                        @* <label class="form-check-label" asp-for="@Model.RoleClaims[i].IsSelected">
+                            @Model.RoleClaims[i].RoleName
+                        </label>
+                         *@
+                    </div>
+                        </td>
+                        <td>@Model.RoleClaims[i].RoleName.Split('.')[1]</td>
+                        <td>@Model.RoleClaims[i].RoleName.Split('.')[2]</td>
+                        
+                    </tr>
+                }
+                    </tbody>
+                </table>
+               
+                <div asp-validation-summary="All" class="text-danger">
+                    
+                </div>
+                <div class="card-footer">
+                    <button type="submit"class="btn btn-secondary">Save</button>
+                    <a asp-action="Index" class="btn btn-danger">Cancel</a>
+                    
+                </div>
+            </div>
+        </div>
+        
+    </div>
+
+</form>
+

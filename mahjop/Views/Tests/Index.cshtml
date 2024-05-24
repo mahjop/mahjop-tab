@@ -1,0 +1,141 @@
+﻿@model mahjop.ViewModels.TestViewModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Test  for  @ViewBag.PatientName</h1>
+@if (User.IsInRole("Lab") || User.IsInRole("Admin") || User.IsInRole("Doctor"))
+{
+    <a asp-action="Create" class="btn btn-outline-info" asp-controller="Tests" asp-route-patientId="@ViewBag.PatientId">Create Test</a>
+
+
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2 class="text-success">Tests With Results</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Result</th>
+                        <th>Patient</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Tests.Where(t => !string.IsNullOrEmpty(t.Result)))
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Result)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Patient.FullName)</td>
+                            <td>
+                                @if (User.IsInRole("Lab") || User.IsInRole("Admin")){
+                                    <a asp-action="Edit" class="btn btn-outline-warning" asp-route-id="@item.TestId">Edit</a>
+                                    <a class=" delete-test btn btn-danger" data-test-id="@item.TestId">
+                                        Delete Test
+                                    </a>
+                                }
+
+                                <a asp-action="Details" class="btn btn-outline-success" asp-route-id="@item.TestId">Details</a>
+
+
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-6">
+            <h2 class="text-danger">Tests Without Results</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Result</th>
+                        <th>Patient</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Tests.Where(t => string.IsNullOrEmpty(t.Result)))
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Result)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Patient.FullName)</td>
+                            <td>
+                                @if (User.IsInRole("Lab") || User.IsInRole("Admin"))
+                                {
+                                    <a asp-action="Edit" class="btn btn-outline-warning" asp-route-id="@item.TestId">Edit</a>
+                                    <a  class=" delete-test btn btn-danger " data-test-id="@item.TestId">
+                                        Delete Test
+                                    </a>
+                                }
+
+                                <a asp-action="Details" class="btn btn-outline-success" asp-route-id="@item.TestId">Details</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+       
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    $(document).ready(function () {
+        $('.delete-test').click(function () {
+            var TestId = $(this).data('test-id'); // تعديل الاسترجاع على اسم البيانات
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you really want to delete this test?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'Delete',
+                        url: '/Tests/DeleteTest',
+                        data: { id: TestId }, // تم تغيير اسم المتغير لتتطابق مع اسم المتغير في الدالة
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'The test has been successfully deleted.',
+                                    'success'
+                                );
+
+                                location.reload(); // إعادة تحميل الصفحة بعد حذف الاختبار
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting the test.',
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function () {
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while deleting the test.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>

@@ -1,0 +1,72 @@
+﻿@model IEnumerable<mahjop.Models.MedicalHistory>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Medical History for  @ViewBag.PatientName</h1>
+
+@if (User.IsInRole("Admin") || User.IsInRole("Doctor"))
+{
+    <a asp-action="Create" class="btn btn-outline-info" asp-controller="MedicalHistories" asp-route-patientId="@ViewBag.PatientId">Create Medication</a>
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Diagnosis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Notes)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Hospital)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Patient)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Diagnosis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Notes)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DoctorName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Hospital)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Patient.PatientId)
+            </td>
+            <td>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Doctor"))
+                    {
+                        <a asp-action="Edit" class="btn btn-outline-warning" asp-route-id="@item.MedicalHistoryId">Edit</a>
+                        <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.MedicalHistoryId">Delete</a>
+                    }
+                   
+                    <a asp-action="Details" class="btn btn-outline-success" asp-route-id="@item.MedicalHistoryId">Details</a>
+
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

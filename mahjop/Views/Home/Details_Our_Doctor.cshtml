@@ -1,0 +1,154 @@
+﻿@model mahjop.Models.Doctor
+@{
+    ViewData["Title"] = "Details_Our_Doctor";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+    @using System.Globalization
+}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="d-flex flex-column">
+                    @if (Model.DoctorPicture != null && Model.DoctorPicture.Length > 0)
+                    {
+                        <img class="img-fluid rounded w-75 align-self-end" src="data:image;base64,@Convert.ToBase64String(Model.DoctorPicture)" alt="">
+                    }
+                    else
+                    {
+                        <img class="img-fluid rounded w-75 align-self-end" src="~/images/no_image.jpg" alt="">
+                    }
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <p class="d-inline-block border rounded-pill py-1 px-4">About Us</p>
+                <h1 class="mb-4"><span>Name:</span> @Model.NameDoctor</h1>
+                <p><span style="font-size:100%;color:black;">Description:</span> @Model.DescriptionDoctor</p>
+                <p class="mb-4"></p>
+                <p><i class="far fa-check-circle text-primary me-3"></i>@Model.Department.Name</p>
+                <p><i class="far fa-check-circle text-primary me-3"></i>@Model.Rating</p>
+                <p><i class="far fa-check-circle text-primary me-3"></i>@Model.Address</p>
+                @if (ViewData["WorkingHours"] != null)
+                {
+                    var workingHours = ViewData["WorkingHours"] as List<mahjop.Models.WorkingHours>;
+                    if (workingHours.Any())
+                    {
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Day</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var hours in workingHours)
+                                    {
+                                        <tr>
+                                            <td>@hours.Day</td>
+                                            <td>@hours.StartTime</td>
+                                            <td>@hours.EndTime</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- Add Appointment Button and Modal -->
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            Add Appointment
+                        </button>
+                    }
+                    else
+                    {
+                        <p>No working hours available.</p>
+                    }
+                }
+                else
+                {
+                    <p>No working hours available.</p>
+                }
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <form id="addForm" asp-action="Create" asp-controller="Home" asp-route-doctorId="@ViewData["DoctorId"]">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Add Appointment</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="mb-3">
+                                        <label asp-for="AppointmentDay" class="form-label">Select Appointment Day </label>
+                                        <input asp-for="AppointmentDay" class="form-control" type="date" required>
+                                        <span asp-validation-for="AppointmentDay" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label asp-for="AppointmentTime" class="form-label">Appointment Time </label>
+                                        <input asp-for="AppointmentTime" class="form-control" type="time" required>
+                                        <span asp-validation-for="AppointmentTime" class="text-danger"></span>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label asp-for="DoctorId" class="form-label">DoctorId  </label>
+                                        <input asp-for="DoctorId" readonly class="form-control">
+                                        <span asp-validation-for="DoctorId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#addForm').submit(function (e) {
+                e.preventDefault(); // منع النموذج من الإرسال بشكل عادي
+                var formData = $(this).serialize();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("Create", "Home")', // استبدالها بالرابط الفعلي
+                    data: formData,
+                    success: function (response) {
+                        if (response.success) {
+                            Swal.fire(
+                                'Success!',
+                                'Appointment booked successfully!',
+                                'success'
+                            );
+                            setTimeout(function () {
+                                location.reload();
+                            }, 1500); // تأخير لمدة 1000 مللي ثانية (1 ثانية)
+                        }
+                        else {
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while booking the appointment.',
+                                'error'
+                            );
+                        }
+                    },
+                    error: function () {
+                        Swal.fire(
+                            'Error!',
+                            'An error occurred while booking the appointment.',
+                            'error'
+                        );
+                    }
+                });
+            });
+        });
+    </script>
+}

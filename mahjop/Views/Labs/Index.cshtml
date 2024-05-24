@@ -1,0 +1,112 @@
+﻿@model IEnumerable<mahjop.Models.Lab>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a class="btn btn-outline-info" asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LabPicture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsActive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @{
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(item.Description))
+                            {
+                                var words = item.Description.Split(' ');
+
+                                // التأكد من أن هناك على الأقل 3 كلمات قبل الانضمام إليها
+                                if (words.Length >= 3)
+                                {
+                                    // الحصول على الكلمات الثلاث الأولى
+                                    var firstThreeWords = string.Join(" ", words.Take(3));
+                                    @firstThreeWords
+                                }
+                                else
+                                {
+                                    // التعامل مع حالة عدم وجود عدد كافٍ من الكلمات هنا
+                                    <text>No enough words</text>
+                                }
+                            }
+                            else
+                            {
+                                // التعامل مع حالة عدم وجود وصف للعنصر هنا
+                                <text>No description available</text>
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // التعامل مع أي استثناءات تحدث
+                            <text>An error occurred: @ex.Message</text>
+                        }
+                    }
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Rating)
+                </td>
+                <td>
+                    @if (item.LabPicture != null && item.LabPicture.Length > 0)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(item.LabPicture)" alt="lab Image" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsActive)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    <a asp-action="Edit" class="btn btn-outline-warning" asp-route-id="@item.LabId">Edit</a>
+                    <a asp-action="Details" class="btn btn-outline-success" asp-route-id="@item.LabId">Details</a>
+                    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.LabId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

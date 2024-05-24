@@ -1,0 +1,107 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (User.IsInRole("Admin"))
+{
+    <h1>Hello @User.Identity.Name</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">User Count</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">@ViewData["UserCount"]</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Patients Count</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">@ViewData["PatientsCount"]</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Doctors Count</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">@ViewData["DoctorsCount"]</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card border-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Lab Count</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">@ViewData["LabCount"]</h5>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card border-primary mb-3" style="max-width: 18rem;">
+                <div class="card-header">Pharmacy Count</div>
+                <div class="card-body text-primary">
+                    <h5 class="card-title">@ViewData["PharmcyCount"]</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- بداية النموذج -->
+    <form method="post" asp-action="ClearViews" class="mb-3">
+        @Html.AntiForgeryToken()
+
+        <!-- إضافة حقل مخفي لتحديد العملية -->
+        <input type="hidden" name="operation" value="clearViews" />
+
+        <div class="card border-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header">Views Count</div>
+            <div class="card-body text-primary">
+                <h5 class="card-title">@ViewData["ViewsCount"]</h5>
+                <!-- زر "Clear View" -->
+                <button type="submit" class="btn btn-danger">Clear View</button>
+            </div>
+        </div>
+    </form>
+    <!-- نهاية النموذج -->
+    
+
+}
+@if (User.IsInRole("Doctor"))
+{
+    <h1>Hello Dr.@User.Identity.Name</h1>
+    <h2>Please create a page where you can introduce yourself, receive bookings, and manage appointments. If you need assistance, feel free to contact us.</h2>
+    <h4>Thank you for choosing <span style="color:#0463FA ">Tabibk</span> platform!</h4>
+}
+@if (User.IsInRole("pharmacy"))
+{
+    <h1>Hello @User.Identity.Name</h1>
+    <h2>Please create a page where you can introduce yourself</h2>
+    <h4>Thank you for choosing <span style="color:#0463FA ">Tabibk</span> platform!</h4>
+}
+@if (User.IsInRole("Lab"))
+{
+    <h1>Hello @User.Identity.Name</h1>
+    <h2>Please create a page where you can introduce yourself</h2>
+    <h4>Thank you for choosing <span style="color:#0463FA ">Tabibk</span> platform!</h4>
+}
+@if (User.IsInRole("User"))
+{
+    <h1>Hello @User.Identity.Name</h1>
+    <h2>
+        If you are a medical specialist (doctor, laboratory, or pharmacy), please contact us at<a href="tel:0779346648">0779346648</a>
+        .
+        Otherwise, please create a medical profile to enable booking appointments and opening 
+        patient consultations on
+        Tabibk platform and benefit from our services.
+    </h2>
+      <h4>Thank you for choosing <span style="color:#0463FA ">Tabibk</span> platform!</h4>
+}

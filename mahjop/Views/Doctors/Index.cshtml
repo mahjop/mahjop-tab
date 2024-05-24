@@ -1,0 +1,119 @@
+﻿@model IEnumerable<mahjop.Models.Doctor>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Doctor</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-info">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NameDoctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DescriptionDoctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Address)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rating)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DoctorPicture)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Isactive)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Department)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameDoctor)
+            </td>
+                <td>
+                    @{
+                        try
+                        {
+                            if (!string.IsNullOrEmpty(item.DescriptionDoctor))
+                            {
+                                var words = item.DescriptionDoctor.Split(' ');
+
+                                // التأكد من أن هناك على الأقل 3 كلمات قبل الانضمام إليها
+                                if (words.Length >= 3)
+                                {
+                                    // الحصول على الكلمات الثلاث الأولى
+                                    var firstThreeWords = string.Join(" ", words.Take(3));
+                                    @firstThreeWords
+                                }
+                                else
+                                {
+                                    // التعامل مع حالة عدم وجود عدد كافٍ من الكلمات هنا
+                                    <text>No enough words</text>
+                                }
+                            }
+                            else
+                            {
+                                // التعامل مع حالة عدم وجود وصف للعنصر هنا
+                                <text>No description available</text>
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            // التعامل مع أي استثناءات تحدث
+                            <text>An error occurred: @ex.Message</text>
+                        }
+                    }
+                </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                    @if (item.DoctorPicture != null && item.DoctorPicture.Length > 0)
+                    {
+                        <img src="data:image;base64,@Convert.ToBase64String(item.DoctorPicture)" alt="Doctoer Image" />
+                    }
+                    else
+                    {
+                        <span>No Image</span>
+                    }
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Isactive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Department.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserId)
+            </td>
+            <td>
+                    <a asp-action="Edit" class="btn btn-outline-success" asp-route-id="@item.DoctorId">Edit</a> 
+                    <a asp-action="Details" class="btn btn-outline-warning" asp-route-id="@item.DoctorId">Details</a> 
+                    <a asp-action="Delete" class="btn btn-outline-danger" asp-route-id="@item.DoctorId">Delete</a>
+                    <a asp-action="IndexDoctor" class="btn btn-outline-secondary" asp-controller="Appointments" asp-route-id="@item.DoctorId">Appointment</a>
+                    <a asp-action="Index" class="btn btn-outline-primary" asp-controller="WorkingHours" asp-route-id="@item.DoctorId">Working Hours</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

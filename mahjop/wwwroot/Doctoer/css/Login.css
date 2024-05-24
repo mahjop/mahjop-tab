@@ -1,0 +1,393 @@
+﻿/*@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background-position:center;
+    background-image: url('../../images/download.jpeg');
+}
+
+.container {
+    position: relative;
+    width: 256px;
+    height: 256px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .container span {
+        position: absolute;
+        left: 0;
+        width: 32px;
+        height: 6px;
+        background: #2c4766;
+        border-radius: 8px;
+        transform-origin: 128px;
+        transform: scale(2.2) rotate(calc(var(--i) * (360deg / 50)));
+        animation: animateBlink 3s linear infinite;
+        animation-delay: calc(var(--i) * (3s / 50));
+    }
+
+@keyframes animateBlink {
+    0% {
+        background: #0ef;
+    }
+
+    25% {
+        background: #2c4766;
+    }
+}
+
+.login-box {
+    position: absolute;
+    width: 400px;
+}
+
+    .login-box form {
+        width: 100%;
+        padding: 0 50px;
+    }
+
+h2 {
+    font-size: 2em;
+    color: #0ef;
+    text-align: center;
+}
+
+.input-box {
+    position: relative;
+    margin: 25px 0;
+}
+
+    .input-box input {
+        width: 100%;
+        height: 50px;
+        background: transparent;
+        border: 2px solid #2c4766;
+        outline: none;
+        border-radius: 40px;
+        font-size: 1em;
+        color: #fff;
+        padding: 0 20px;
+        transition: .5s ease;
+    }
+
+        .input-box input:focus,
+        .input-box input:valid {
+            border-color: #0ef;
+        }
+
+    .input-box label {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        font-size: 1em;
+        color: #fff;
+        pointer-events: none;
+        transition: .5s ease;
+    }
+
+    .input-box input:focus ~ label,
+    .input-box input:valid ~ label {
+        top: 1px;
+        font-size: .8em;
+        background: #1f293a;
+        padding: 0 6px;
+        color: #0ef;
+    }
+
+.forgot-pass {
+    margin: -15px 0 10px;
+    text-align: center;
+}
+
+    .forgot-pass a {
+        font-size: .85em;
+        color: #fff;
+        text-decoration: none;
+    }
+
+        .forgot-pass a:hover {
+            text-decoration: underline;
+        }
+
+.btn {
+    width: 100%;
+    height: 45px;
+    background: #0ef;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    cursor: pointer;
+    font-size: 1em;
+    color: #1f293a;
+    font-weight: 600;
+}
+
+.signup-link {
+    margin: 20px 0 10px;
+    text-align: center;
+}
+
+    .signup-link a {
+        font-size: 1em;
+        color: #0ef;
+        text-decoration: none;
+        font-weight: 600;
+    }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+*/
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+/*=============== VARIABLES CSS ===============*/
+:root {
+  /*========== Colors ==========*/
+  /*Color mode HSL(hue, saturation, lightness)*/
+  --white-color: hsl(0, 0%, 100%);
+  --black-color: hsl(0, 0%, 0%);
+  /*========== Font and typography ==========*/
+  /*.5rem = 8px | 1rem = 16px ...*/
+  --body-font: "Poppins", sans-serif;
+  --h1-font-size: 1.75rem;
+  --normal-font-size: 1rem;
+  --small-font-size: .813rem;
+  /*========== Font weight ==========*/
+  --font-medium: 500;
+}
+
+/*=============== BASE ===============*/
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body,
+input,
+button {
+  font-size: var(--normal-font-size);
+  font-family: var(--body-font);
+}
+
+body {
+    color: var(--white-color);
+    background-color: #90ee90; /* أخضر فاتح */
+    background-image: linear-gradient(to bottom, #90ee90, #f0fff0, #ffffff); /* مزيج من الأخضر الفاتح والأزرق الفاتح والأبيض */
+}
+
+input,
+button {
+  border: none;
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+img {
+    max-width: 40%;
+    height: auto;
+    margin-left: 6%;
+    filter: drop-shadow(6px 4px 11px #24d6d0);
+    animation: moveImage 3s ease infinite alternate; /* حركة يمين وشمال لمدة 3 ثواني بشكل متكرر */
+}
+
+@keyframes moveImage {
+    to {
+        transform: translateX(3%); /* تحريك الصورة إلى اليمين */
+    }
+
+    from {
+        transform: translateX(-3%); /* تحريك الصورة إلى الشمال */
+    }
+}
+/* قواعد CSS لأحجام الشاشات الصغيرة مثل الهواتف النقالة */
+@media screen and (max-width: 600px) {
+    img {
+        max-width: 100%; /* عرض الصورة للشاشات الصغيرة */
+        margin-left: auto; /* توسيط الصورة في الشاشات الصغيرة */
+        margin-right: auto;
+        filter: drop-shadow(4px 2px 8px #24d6d0); /* ظل للصورة في الشاشات الصغيرة */
+    }
+}
+
+
+/*=============== LOGIN ===============*/
+.login {
+  position: relative;
+  height: 100vh;
+  display: grid;
+  align-items: center;
+}
+.login__img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.login__form {
+  position: relative;
+  background-color: hsla(0, 0%, 10%, 0.1);
+  border: 2px solid var(--white-color);
+  margin-inline: 1.5rem;
+  padding: 2.5rem 1.5rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(8px);
+}
+.login__title {
+  text-align: center;
+  font-size: var(--h1-font-size);
+  font-weight: var(--font-medium);
+  margin-bottom: 2rem;
+}
+.login__content, .login__box {
+  display: grid;
+}
+.login__content {
+  row-gap: 1.75rem;
+  margin-bottom: 1.5rem;
+}
+.login__box {
+  grid-template-columns: max-content 1fr;
+  align-items: center;
+  column-gap: 0.75rem;
+  border-bottom: 2px solid var(--white-color);
+}
+.login__icon, .login__eye {
+  font-size: 1.25rem;
+}
+.login__input {
+  width: 100%;
+  padding-block: 0.8rem;
+  background: none;
+  color: var(--white-color);
+  position: relative;
+  z-index: 1;
+}
+.login__box-input {
+  position: relative;
+}
+.login__label {
+  position: absolute;
+  left: 0;
+  top: 13px;
+  font-weight: var(--font-medium);
+  transition: top 0.3s, font-size 0.3s;
+}
+.login__eye {
+  position: absolute;
+  right: 0;
+  top: 18px;
+  z-index: 10;
+  cursor: pointer;
+}
+.login__box:nth-child(2) input {
+  padding-right: 1.8rem;
+}
+.login__check, .login__check-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.login__check {
+  margin-bottom: 1.5rem;
+}
+.login__check-label, .login__forgot, .login__register {
+  font-size: var(--small-font-size);
+}
+.login__check-group {
+  column-gap: 0.5rem;
+}
+.login__check-input {
+  width: 16px;
+  height: 16px;
+}
+.login__forgot {
+  color: var(--white-color);
+}
+.login__forgot:hover {
+  text-decoration: underline;
+}
+.login__button {
+  width: 100%;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--white-color);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+.login__register {
+  text-align: center;
+}
+.login__register a {
+  color: var(--white-color);
+  font-weight: var(--font-medium);
+}
+.login__register a:hover {
+  text-decoration: underline;
+}
+
+/* Input focus move up label */
+.login__input:focus + .login__label {
+  top: -12px;
+  font-size: var(--small-font-size);
+}
+
+/* Input focus sticky top label */
+.login__input:not(:placeholder-shown).login__input:not(:focus) + .login__label {
+  top: -12px;
+  font-size: var(--small-font-size);
+}
+
+/*=============== BREAKPOINTS ===============*/
+/* For medium devices */
+@media screen and (min-width: 576px) {
+  .login {
+    justify-content: center;
+  }
+  .login__form {
+    width: 432px;
+    padding: 4rem 3rem 3.5rem;
+    border-radius: 1.5rem;
+  }
+  .login__title {
+    font-size: 2rem;
+  }
+}
+.re {
+    color: black;
+    transition: color 0.3s; /* تأثير التحويل لتغيير اللون */
+}
+
+    .re:hover {
+        color: #0463FA !important;
+    }
+.r {
+    background-color: white;
+    transition: color 0.3s; /* تأثير التحويل لتغيير اللون */
+}
+
+    .r:hover {
+        background-color: #0463FA !important;
+        color: white
+    }
+    .ree{
+        color:black;
+    }

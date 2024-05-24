@@ -1,0 +1,75 @@
+﻿@model mahjop.Models.Doctor
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Doctor</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NameDoctor)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NameDoctor)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DescriptionDoctor)
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var description = Model.DescriptionDoctor;
+                if (!string.IsNullOrEmpty(description) && description.Length > 4)
+                {
+                    var firstFourWords = string.Join(" ", description.Split().Take(4));
+                    @Html.Raw(firstFourWords + "<br />" + description.Substring(firstFourWords.Length))
+                }
+                else
+                {
+                    @Html.DisplayFor(model => model.DescriptionDoctor)
+                }
+            }
+        </dd>
+
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Rating)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Rating)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.DoctorPicture)
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.DoctorPicture != null && Model.DoctorPicture.Length > 0)
+            {
+                <img style="height:100px;width:auto;"  src="data:image;base64,@Convert.ToBase64String(Model.DoctorPicture)" alt="Doctor Image" />
+            }
+            else
+            {
+                <span>No Image</span>
+            }
+        </dd>       
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Department)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Department.Name)
+        </dd>
+        
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.DoctorId">Edit</a> 
+    <a asp-action="Index">Back to List</a>
+</div>

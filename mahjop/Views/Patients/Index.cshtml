@@ -1,0 +1,218 @@
+﻿@model IEnumerable<mahjop.Models.Patient>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-outline-info">Create New</a>
+</p>
+@if (User.IsInRole("User"))
+{
+    <div class="table-responsive">
+
+   
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Weight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Height)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.UserId)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DateOfBirth)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Weight)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Height)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserId)
+                    </td>
+                    <td>
+                        <a asp-action="Edit"class="btn btn-outline-warning" asp-route-id="@item.PatientId">Edit</a> |
+                        <a asp-action="Details" class="btn btn-outline-success" asp-route-id="@item.PatientId">Details</a>
+
+                        <a asp-action="Index" class="btn btn-outline-primary" asp-controller="Tests" asp-route-id="@item.PatientId">Test</a>
+                        <a asp-action="Index" asp-controller="Medications" class="btn btn-outline-danger" asp-route-id="@item.PatientId">Medications</a>
+                        <a class="btn btn-info   text-wihte" asp-action="Index" asp-controller="MedicalHistories" asp-route-id="@item.PatientId">Medical Histories</a>
+                        <a class="btn btn-info   text-wihte" asp-action="Index" asp-controller="HealthAssessments" asp-route-id="@item.PatientId">Health Assessments</a>
+
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    </div>
+}
+@if (User.IsInRole("pharmacy") || User.IsInRole("Admin") || User.IsInRole("Doctor") || User.IsInRole("Lab"))
+{
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="dataTableExample" class="table">
+                            <thead>
+                                <tr>
+
+                                    <th>Full Name</th>
+                                    <th>Gender</th>
+                                    <th>Phone Number</th>
+
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.FullName)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Gender)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.PhoneNumber)
+                                        </td>
+
+
+
+                                        MedicalHistories
+
+                                        <td>
+                                            @if (User.IsInRole("Admin") || User.IsInRole("Doctor"))
+                                            {
+                                                <a class="btn btn-warning" asp-action="Details" asp-route-id="@item.PatientId">
+                                                    Details
+                                                </a>
+                                                <a class="btn btn-info   text-wihte" asp-action="Index" asp-controller="MedicalHistories" asp-route-id="@item.PatientId">Medical Histories</a>
+                                                <a class="btn btn-info   text-wihte" asp-action="Index" asp-controller="HealthAssessments" asp-route-id="@item.PatientId">Health Assessments</a>
+                                            }
+                                           
+                                            @if (User.IsInRole("Admin")){
+                                                <a class="btn btn-danger delete-patient text-white" data-test-id="@item.PatientId">
+                                                    Delete Patient
+                                                </a>
+                                            }
+                                            @if (User.IsInRole("Lab") || User.IsInRole("Admin") || User.IsInRole("Doctor"))
+                                            {
+                                                <a class="btn btn-primary   text-wihte" asp-action="Index" asp-controller="Tests" asp-route-id="@item.PatientId">Test</a>
+
+                                            }
+                                            @if (User.IsInRole("pharmacy") || User.IsInRole("Admin") || User.IsInRole("Doctor"))
+                                            {
+                                                <a class="btn btn-primary   text-wihte" asp-action="Index" asp-controller="Medications" asp-route-id="@item.PatientId">Medications</a>
+                                     
+                                            }
+                                        </td>
+                                    </tr>
+                                }
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+<script>
+    $(document).ready(function () {
+        $('.delete-patient').click(function () {
+            var PatientId = $(this).data('test-id');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'Do you really want to delete this test?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete!',
+                cancelButtonText: 'Cancel'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        type: 'Delete',
+                        url: '/Patients/DeletePatients',
+                        data: { id: PatientId },
+                        success: function (response) {
+                            if (response.success) {
+                                Swal.fire(
+                                    'Deleted!',
+                                    'The patient has been successfully deleted.',
+                                    'success'
+                                );
+                                location.reload();
+                            } else {
+                                Swal.fire(
+                                    'Error!',
+                                    'An error occurred while deleting the patient.',
+                                    'error'
+                                );
+                            }
+                        },
+                        error: function () {
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while deleting the patient.',
+                                'error'
+                            );
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>

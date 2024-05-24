@@ -1,0 +1,159 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout_admin.cshtml";
+}
+<link href="~/Doctoer/css/Login.css" rel="stylesheet">
+
+
+@*
+<div class="row">
+    <div class="col-md-4">
+        <form asp-route-returnUrl="@Model.ReturnUrl" method="post">
+            <h4>Create a new account.</h4>
+            <hr />
+            <div asp-validation-summary="All" class="text-danger"></div>
+           
+            <div class="form-group">
+                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control" />
+                <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+            </div>
+              <div class="form-group">
+                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control" />
+                <span asp-validation-for="Input.LastName" class="text-danger"></span>
+            </div>
+             <div class="form-group">
+                <label asp-for="Input.Email"></label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.Password"></label>
+                <input asp-for="Input.Password" class="form-control" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword"></label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Register</button>
+        </form>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h4>Use another service to register.</h4>
+            <hr />
+            @{
+                if ((Model.ExternalLogins?.Count ?? 0) == 0)
+                {
+                    <div>
+                        <p>
+                            There are no external authentication services configured. See <a href="https://go.microsoft.com/fwlink/?LinkID=532715">this article</a>
+                            for details on setting up this ASP.NET application to support logging in via external services.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <form id="external-account" asp-page="./ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal">
+                        <div>
+                            <p>
+                                @foreach (var provider in Model.ExternalLogins)
+                                {
+                                    <button type="submit" class="btn btn-primary" name="provider" value="@provider.Name" title="Log in using your @provider.DisplayName account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
+                }
+            }
+        </section>
+    </div>
+</div>*@
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <!--=============== REMIXICONS ===============-->
+        <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+        <!--=============== CSS ===============-->
+        <link rel="stylesheet" href="assets/css/styles.css">
+
+        <title>Register for tabibk</title>
+    </head>
+    <body>
+        S
+        <div class="login">
+            <img src="~/images/doctor.png" alt="login image" class="login__img">
+
+            <form class="login__form" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+                <div asp-validation-summary="All" style="color:red" class="text-danger"></div>
+                <h1 class="login__title">Register</h1>
+
+                <div class="login__content">
+                    <div class="login__box">
+                        <i class="ri-user-3-line login__icon"></i>
+
+                        <div class="login__box-input">
+                            <input asp-for="Input.FirstName" type="text" required class="login__input" id="login-email" placeholder=" ">
+                            <label asp-for="Input.FirstName" for="login-email" class="login__label"></label>
+                        </div>
+                       
+                    </div> 
+                    <div class="login__box">
+                        <i class="ri-user-3-line login__icon"></i>
+
+                       
+                         <div class="login__box-input">
+                            <input asp-for="Input.Email" type="email" required class="login__input" id="login-email" placeholder=" ">
+                            <label asp-for="Input.Email" for="login-email" class="login__label"></label>
+                        </div>
+                    </div>
+
+                    <div class="login__box">
+                        <i class="ri-lock-2-line login__icon"></i>
+
+                        <div class="login__box-input">
+                            <input asp-for="Input.Password" type="password" required class="login__input" id="login-pass" placeholder=" ">
+                            <label asp-for="Input.Password" for="login-pass" class="login__label"></label>
+                            <i class="ri-eye-off-line login__eye" id="login-eye"></i>
+                        </div>
+                       
+                    </div> 
+                    <div class="login__box">
+                        <i class="ri-lock-2-line login__icon"></i>
+
+                      
+                        <div class="login__box-input">
+                            <input asp-for="Input.ConfirmPassword" type="password" required class="login__input" id="login-pass" placeholder=" ">
+                            <label asp-for="Input.ConfirmPassword" for="login-pass" class="login__label"></label>
+                            <i class="ri-eye-off-line login__eye" id="login-eye"></i>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <button type="submit" class="login__button r">Register</button>
+
+                <p class="login__register ree">
+                    I have an account? <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl" class="re">Login</a>
+                </p>
+            </form>
+        </div>
+
+        <!--=============== MAIN JS ===============-->
+        <script src="assets/js/main.js"></script>
+    </body>
+    </html>

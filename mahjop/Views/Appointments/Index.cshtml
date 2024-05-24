@@ -1,0 +1,68 @@
+﻿@model IEnumerable<mahjop.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Index</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.AppointmentDay)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.IsConfirmed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Doctor)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.UserId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentTime)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AppointmentDay)
+                </td>
+                <td>
+                    @if (item.IsConfirmed)
+                    {
+                        <span style="color: green;">Confirmed</span>
+                    }
+                    else
+                    {
+                        <span style="color: red;">Not Confirmed</span>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Doctor.NameDoctor)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UserId)
+                </td>
+                <td>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a asp-action="Edit" asp-route-id="@item.AppointmentId">Edit</a>
+                    }
+                    <a asp-action="Details" asp-route-id="@item.AppointmentId">Details</a>
+                    <a asp-action="Delete" asp-route-id="@item.AppointmentId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,32 @@
+﻿@model mahjop.Models.Lab
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                <div class="d-flex flex-column">
+                    @if (Model.LabPicture != null && Model.LabPicture.Length > 0)
+                    {
+                        <img class="img-fluid rounded w-75 align-self-end" src="data:image;base64,@Convert.ToBase64String(Model.LabPicture)" alt="">
+
+                    }
+                    else
+                    {
+                        <img class="img-fluid rounded w-75 align-self-end" src="~/images/no_image.jpg" alt="">
+                    }
+
+                </div>
+            </div>
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s">
+                <p class="d-inline-block border rounded-pill py-1 px-4">About Us</p>
+                <h1 class="mb-4"><span>Name:</span> @Model.Name</h1>
+                <p><span style="font-size:100%;color:black;">Description:</span> @Model.Description</p>
+                <p class="mb-4"></p>
+                <p><i class="far fa-check-circle text-primary me-3"></i>@Model.Rating</p>
+                <p><i class="far fa-check-circle text-primary me-3"></i>@Model.Address</p>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- About End -->
